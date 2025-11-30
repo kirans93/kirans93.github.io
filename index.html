@@ -331,6 +331,7 @@
 
     .hero-avatar {
       width: 46px;
+      margin-left: 4px;
       height: 46px;
       border-radius: 999px;
       border: 1px solid rgba(148, 163, 184, 0.8);
@@ -358,12 +359,13 @@
       color: var(--muted);
     }
 
-    .hero-profile-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-top: 0.4rem;
-    }
+   .hero-profile {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+
+    
 
     .hero-profile-tag {
       font-size: 0.68rem;
@@ -412,6 +414,30 @@
       font-size: 0.7rem;
       margin-bottom: 1.1rem;
     }
+
+    .resume-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 0.9rem;
+  padding: 0.65rem 0;
+  border-radius: 14px;
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  background: linear-gradient(to right, #22d3ee, #38bdf8);
+  color: #020617;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  box-shadow: 0 16px 35px rgba(56, 189, 248, 0.4);
+  
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+
+.resume-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 55px rgba(56, 189, 248, 0.55);
+}
+
 
     .hero-tech span {
       padding: 0.16rem 0.5rem;
@@ -1081,8 +1107,17 @@
                     <div class="name">Kiran&nbsp;S</div>
                     <div class="role">Java Backend Developer</div>
                     <div class="hero-profile-tags">
+
                       <span class="hero-profile-tag">Spring Ecosystem</span>
                       <span class="hero-profile-tag">REST APIs</span>
+
+                    <a href="assets/resume/Kiran-S-Resume.pdf" 
+   download 
+   class="btn resume-btn"
+   style="margin-top: 0.7rem; width:100%; text-align:center;">
+📄 Download Resume
+</a>
+
                     </div>
                   </div>
                 </div>
