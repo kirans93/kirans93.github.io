@@ -1023,6 +1023,54 @@
   }
 }
 
+/* Fix layout balance in Skills section */
+.skills-grid {
+  align-items: stretch;
+}
+
+.improve-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.2rem;
+  min-height: 100%;
+  padding: 2.2rem;
+}
+
+.improve-card ul {
+  margin: 0;
+  padding: 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+   margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
+}
+
+.tagline {
+  margin-top: 1.5rem;
+  font-size: 0.88rem;
+  text-align: center;
+  opacity: 0.75;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 0.8rem;
+}
+.improve-card h3 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.improve-card ul li::before {
+  content: "⚙️ ";
+  opacity: 0.6;
+  margin-right: 6px;
+}
+/* .improve-card ul li::before {
+  content: "▹";
+  color: #38bdf8;
+  margin-right: 6px;
+  font-weight: bold;
+} */
+
+
   </style>
 </head>
 <body>
@@ -1325,15 +1373,19 @@
       </div>
 
       <!-- What I'm improving -->
-      <div class="card">
-        <h3>What I'm improving</h3>
-        <ul class="about-list">
-          <li>Cleaner Spring Boot REST APIs with validation and reusable DTOs.</li>
-          <li>Better layered architecture: Controller → Service → Repository.</li>
-          <li>Query optimization, indexes and database-driven performance.</li>
-          <li>Form handling and connecting UI to backend endpoints.</li>
-        </ul>
-      </div>
+      <div class="card improve-card">
+  <h3>What I'm improving</h3>
+  <ul class="about-list">
+    <li>Cleaner Spring Boot REST APIs with validation and reusable DTOs.</li>
+    <li>Better layered architecture: Controller → Service → Repository.</li>
+    <li>Query optimization, indexes and database-driven performance.</li>
+    <li>Form handling and connecting UI to backend endpoints.</li>
+  </ul>
+
+  <p class="tagline">Learning with projects, not theory.</p>
+</div>
+
+
 
     </div>
   </div>
@@ -1559,7 +1611,7 @@
     <footer>
       <div class="container">
         <div class="footer-inner">
-          <div>© <span id="year"></span> Kiran S. Built with pure HTML, CSS & JS.</div>
+          <div>© <span id="year"></span> Kiran S. </div>
           <div class="footer-links">
             <a href="#home">Top</a>
             <a href="#projects">Projects</a>
