@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>School Transport Backend System</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Backend system using Spring Boot, JWT, MySQL, JPA, CI/CD & JMeter." />
+  <meta name="theme-color" content="#0ea5e9" />
+
+<style>
+html { scroll-behavior: smooth; }
+
+/* GLOBAL */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: system-ui, sans-serif;
+  background:#050816;
+  color:#e5e7eb;
+  padding:24px;
+  display:flex;
+  justify-content:center;
+}
+.content { max-width:900px; width:100%; }
+
+/* HEADER */
+header {
+  margin-bottom:30px;
+  padding:24px;
+  background: radial-gradient(circle at top left, #1e293b, #020617 60%);
+  border-radius:18px;
+  border:1px solid rgba(148,163,184,0.25);
+}
+header h1{ font-size:1.8rem; margin-bottom:8px; }
+header p{ font-size:0.95rem; color:#94a3b8; }
+
+/* SECTIONS */
+section {
+  padding:20px;
+  margin-bottom:20px;
+  border-radius:16px;
+  background:rgba(15,23,42,0.88);
+  border:1px solid rgba(55,65,81,0.7);
+}
+section h2{ margin-bottom:10px; color:#38bdf8; font-size:1.15rem; font-weight:600; }
+
+/* LIST */
+ul{ list-style:none; margin-top:6px; }
+ul li{
+  position:relative;
+  padding-left:18px;
+  margin-bottom:6px;
+  font-size:0.95rem;
+}
+ul li::before{
+  content:"•";
+  position:absolute;
+  left:4px;
+  color:#38bdf8;
+}
+
+/* TABLE */
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+}
+th{
+  background:#1e293b;
+  padding:10px;
+  color:#93c5fd;
+}
+td{
+  padding:10px;
+  border-top:1px solid #334155;
+}
+
+/* IMAGE */
+.arch-wrapper{
+  padding:16px;
+  margin:20px 0;
+  border-radius:18px;
+  border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.04);
+  text-align:center;
+}
+.arch-image{
+  width:100%;
+  max-width:760px;
+  border-radius:12px;
+  cursor:zoom-in;
+}
+.arch-caption{margin-top:8px; font-size:0.85rem; color:#94a3b8;}
+
+/* DOWNLOAD */
+.download-box{
+  padding:16px;
+  background:rgba(255,255,255,0.05);
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.07);
+}
+.btn-download{
+  display:block;
+  width:max-content;
+  margin-top:8px;
+  padding:10px 14px;
+  border-radius:10px;
+  color:#38bdf8;
+  border:1px solid #38bdf8;
+  text-decoration:none;
+}
+.btn-download:hover{
+  background:#38bdf8;
+  color:black;
+}
+
+/* SIDEBAR */
+.sidebar{
+  position:fixed;
+  left:10px;
+  top:100px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.sidebar a{
+  color:#38bdf8;
+  font-size:0.9rem;
+  text-decoration:none;
+  opacity:0.75;
+}
+.sidebar a:hover{ opacity:1; }
+
+/* THEME FIX */
+.light body { background:#f8fafc; color:#1e293b; }
+.light section, .light header { background:white; border-color:#cbd5e1; }
+.light h2 { color:#0284c7; }
+.light a { color:#0284c7; }
+.light td, .light th, .light p, .light li { color:#1e2937 !important; }
+.light .arch-caption { color:#475569; }
+.light .sidebar a { color:#0284c7; }
+
+/* MOBILE */
+@media(max-width:850px){ .sidebar{display:none;} }
+@media(max-width:500px){
+  header, section { padding:14px; }
+  h1{ font-size:1.3rem; }
+}
+
+.footer-btn {
+  padding:10px 18px;
+  background:#1e293b;
+  border:1px solid #38bdf8;
+  border-radius:10px;
+  text-decoration:none;
+  color:#38bdf8;
+  font-size:0.95rem;
+  transition:.25s;
+}
+
+.footer-btn:hover {
+  background:#38bdf8;
+  color:#000;
+  transform:translateY(-2px);
+}
+
+/* Light mode button fix */
+.light .footer-btn {
+  background:white;
+  border-color:#0284c7;
+  color:#0284c7;
+}
+
+.light .footer-btn:hover {
+  background:#0284c7;
+  color:white;
+}
+
+.footer-actions {
+  margin-top: 30px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(55,65,81,.6);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-actions .footer-btn-wrapper {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.footer-copy {
+  font-size: 0.9rem;
+  opacity: 0.6;
+  margin-left: auto;
+}
+
+/* Fix API code block readability in light mode */
+.light pre {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+  box-shadow: inset 0 0 4px rgba(0,0,0,0.05);
+  font-weight: 500;
+  white-space: pre-wrap;
+}
+
+.light pre::selection {
+  background: #cce4ff;
+}
+
+
+
+</style>
+</head>
+
+<body>
+
+<button id="themeToggle" style="
+position:fixed; right:20px; bottom:20px;
+background:#1e293b; border:1px solid #38bdf8;
+padding:10px 14px; border-radius:10px; cursor:pointer; color:#38bdf8;">
+🌗 Theme
+</button>
+
+<div class="content">
+
+<header>
+  <h1>School Transport Backend System</h1>
+  <p>Spring Boot • JWT • MySQL • Hibernate • JMeter • CI/CD</p>
+</header>
+
+<nav class="sidebar">
+  <a href="#overview">Overview</a>
+  <a href="#responsibilities">Responsibilities</a>
+  <a href="#features">Features</a>
+  <a href="#architecture">Architecture</a>
+  <a href="#schema">DB Schema</a>
+  <a href="#api">API Docs</a>
+  <a href="#performance">Performance</a>
+  <a href="#result">Result</a>
+</nav>
+
+<section id="overview">
+  <h2>📌 Overview</h2>
+  <p>Backend system enabling secure transport workflow including drivers, buses, trips, routes, fuel logs, alerts & dashboards.</p>
+</section>
+
+<section id="responsibilities">
+  <h2>🎯 Responsibilities</h2>
+  <ul>
+    <li>Authentication and Authorization using JWT</li>
+    <li>REST architecture and layered backend design</li>
+    <li>JPA modeling and complex relationships</li>
+    <li>CI/CD pipeline automation</li>
+  </ul>
+</section>
+
+<section id="features">
+  <h2>🚀 Features</h2>
+  <ul>
+    <li>Route and stop management</li>
+    <li>Emergency alerts + announcements</li>
+    <li>Fuel & maintenance tracking</li>
+    <li>Trip lifecycle with real-time states</li>
+  </ul>
+</section>
+
+<section id="architecture">
+<div class="arch-wrapper">
+  <img src="assets/system_architecture.png" class="arch-image">
+  <p class="arch-caption">Client → Spring Boot API → Database</p>
+</div>
+</section>
+
+<section id="schema">
+  <h2>🗂 Database Schema</h2>
+  <img src="assets/db/school-transport-db-schema.png" style="width:100%;border-radius:12px;">
+</section>
+
+<section id="api">
+  <h2>📡 API Snapshot</h2>
+
+<pre>
+🔹 Authentication
+POST /api/auth/login
+→ { token, role }
+
+🔹 Dashboard
+GET /api/dashboard/full?driverId={id}&vehicleId={id}
+→ DriverFullDashboardDto
+
+GET /api/dashboard/daily-transport
+→ { totalTrips, completedTrips, activeDrivers }
+
+🔹 Trips
+POST /api/trips/start
+→ { tripId, status: "STARTED" }
+
+POST /api/trips/complete/{tripId}
+→ { tripId, status: "COMPLETED" }
+
+GET /api/trips/today/{driverId}
+→ TripSummaryDto[]
+
+🔹 Fuel Management
+POST /driver/fuel/logs
+→ { id, liters, cost, createdAt }
+
+GET /driver/fuel/summary
+→ { totalLiters, avgConsumption }
+
+🔹 Announcements
+GET /api/announcements/recent
+→ List<AnnouncementDto>
+
+POST /api/announcements
+→ { id, message, status }
+</pre>
+
+</section>
+
+
+<section class="download-box">
+  <h2>📦 Resources</h2>
+  <a class="btn-download" href="https://documenter.getpostman.com/view/47594456/2sB3HrkccM">Postman</a>
+  <a class="btn-download" href="assets/db/school-transport-db-schema.png">DB Schema</a>
+  <a class="btn-download" href="assets/system_architecture.png">Architecture Diagram</a>
+</section>
+
+<section id="performance">
+  <h2>⚙ Performance</h2>
+  <ul>
+    <li>JMeter load testing</li>
+    <li>SQL optimization + indexing</li>
+  </ul>
+</section>
+
+<section id="setup">
+  <h2>⚙️ Run Locally</h2>
+
+<pre>
+📁 Clone the repository
+git clone https://github.com/kirans93/driver-dashboard.git
+cd driver-dashboard
+
+🛠 Configure Database
+Update DB credentials in: 
+src/main/resources/application.properties
+
+🧪 Apply Schema
+Import schema.sql or run migrations (if enabled)
+
+🚀 Start Application
+mvn spring-boot:run
+</pre>
+
+<a class="btn-download" href="https://github.com/kirans93/driver-dashboard/archive/refs/heads/main.zip">
+⬇ Download Source (.zip)
+</a>
+
+</section>
+
+
+<section id="result">
+  <h2>📈 Result</h2>
+  <p>Scalable, secure, and production-ready system with optimized response time.</p>
+</section>
+
+<footer class="footer-actions">
+  <div class="footer-btn-wrapper">
+    <a href="index.html" class="footer-btn">← Back</a>
+    <a href="https://github.com/kirans93/Driver-Dashboard" target="_blank" class="footer-btn">GitHub Repo 🔗</a>
+  </div>
+  <p class="footer-copy">© 2025 Kiran S.</p>
+</footer>
+
+
+</div>
+
+
+
+<script>
+document.getElementById("themeToggle").onclick=()=>{document.body.classList.toggle("light")};
+</script>
+
+</body>
+</html>
