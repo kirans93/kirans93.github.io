@@ -150,7 +150,7 @@
       color:#000;
     }
 
-    /* ========= SIDEBAR NAV ========= */
+    /* ========= SIDEBAR NAV (DESKTOP) ========= */
     .sidebar{
       position:fixed;
       left:10px;
@@ -168,53 +168,62 @@
     }
     .sidebar a:hover{ opacity:1; }
 
-/* ========= MOBILE NAV LEFT POSITION ========= */
-.mobile-nav{
-  display:none;
-  position:fixed;
-  bottom:20px;
-  left:20px;
-  transform:none;
-  background:#0b1120;
-  border:1px solid var(--accent);
-  padding:12px 18px;
-  border-radius:14px;
-  gap:18px;
-  z-index:9999;
-  box-shadow:0 0 12px rgba(0,0,0,.45);
-  backdrop-filter:blur(6px);
-}
+    /* ========= MOBILE NAV: BUTTON + DROPDOWN ========= */
+    .mobile-nav-btn{
+      display:none;
+      position:fixed;
+      bottom:20px;
+      left:20px;
+      background:#0b1120;
+      border:1px solid var(--accent);
+      padding:8px 14px;
+      border-radius:999px;
+      z-index:9999;
+      box-shadow:0 0 10px rgba(0,0,0,.45);
+      color:var(--accent);
+      font-size:0.9rem;
+      cursor:pointer;
+    }
 
-.mobile-nav a{
-  color:var(--accent);
-  font-size:0.85rem;
-  text-decoration:none;
-  white-space:nowrap;
-  font-weight:500;
-  opacity:.85;
-}
+    .mobile-menu{
+      display:none;
+      position:fixed;
+      bottom:64px;
+      left:20px;
+      background:#020617;
+      border:1px solid var(--accent);
+      border-radius:12px;
+      padding:10px;
+      flex-direction:column;
+      gap:8px;
+      z-index:9999;
+      box-shadow:0 0 14px rgba(0,0,0,.5);
+    }
 
-.mobile-nav a:hover{ opacity:1; }
+    .mobile-menu a{
+      color:var(--accent);
+      font-size:0.9rem;
+      text-decoration:none;
+      white-space:nowrap;
+      opacity:.9;
+    }
+    .mobile-menu a:hover{ opacity:1; }
 
-/* Show only on mobile & hide sidebar */
-@media(max-width:850px){
-  .sidebar{ display:none; }
-  .mobile-nav{ display:flex; }
-}
+    .mobile-menu.open{ display:flex; }
 
-/* ========= THEME TOGGLE RIGHT SIDE ========= */
-#themeToggle{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  background:#1e293b;
-  border:1px solid var(--accent);
-  padding:10px 14px;
-  border-radius:10px;
-  cursor:pointer;
-  color:var(--accent);
-  z-index:9999;
-}
+    /* ========= THEME TOGGLE RIGHT SIDE ========= */
+    #themeToggle{
+      position:fixed;
+      right:20px;
+      bottom:20px;
+      background:#1e293b;
+      border:1px solid var(--accent);
+      padding:10px 14px;
+      border-radius:10px;
+      cursor:pointer;
+      color:var(--accent);
+      z-index:9999;
+    }
 
     /* ========= FOOTER ========= */
     .footer-actions{
@@ -263,12 +272,21 @@
       background:#0284c7;
       color:#ffffff;
     }
+    .light .mobile-nav-btn,
+    .light .mobile-menu{
+      background:#ffffff;
+      border-color:#0284c7;
+      color:#0284c7;
+    }
+    .light .mobile-menu a{ color:#0284c7; }
 
     /* ========= RESPONSIVE ========= */
     @media(max-width:850px){
       .sidebar{ display:none; }
-      .mobile-nav{ display:flex; }
+      .mobile-nav-btn{ display:block; }
+      body{ padding-bottom:90px; } /* give space so footer not hidden by buttons */
     }
+
     @media(max-width:600px){
       body{ padding:18px; }
       header{ padding:20px; }
@@ -279,7 +297,7 @@
 
     /* ========= PRINT ========= */
     @media print{
-      #themeToggle, .sidebar, .mobile-nav { display:none !important; }
+      #themeToggle, .sidebar, .mobile-nav-btn, .mobile-menu { display:none !important; }
       body{ background:white; color:black; padding:0; }
       section, header{
         background:white !important;
@@ -292,17 +310,18 @@
 
 <body>
 
-<button id="themeToggle" style="position:fixed;right:20px;bottom:20px;z-index:40;">
-  🌗 Theme
-</button>
+<button id="themeToggle">🌗 Theme</button>
 
-<nav class="mobile-nav">
+<!-- Mobile nav: button + dropdown -->
+<button class="mobile-nav-btn" id="mobileNavBtn">📍 Menu</button>
+<div class="mobile-menu" id="mobileMenu">
   <a href="#overview">Overview</a>
+  <a href="#responsibilities">Responsibilities</a>
   <a href="#features">Features</a>
   <a href="#schema">Schema</a>
   <a href="#api">API</a>
   <a href="#result">Result</a>
-</nav>
+</div>
 
 <div class="content">
 
@@ -374,7 +393,7 @@
 POST /api/auth/login
 → JWT token
 
-GET  /api/dashboard/full?driverId={id}&vehicleId={id}
+GET /api/dashboard/full?driverId={id}&vehicleId={id}
 → DriverDashboardDto
 
 POST /api/trips/start
@@ -383,7 +402,7 @@ POST /api/trips/start
 POST /driver/fuel/logs
 → { id, liters, cost, createdAt }
 
-GET  /api/announcements
+GET /api/announcements
 → list of announcements
     </pre>
   </section>
@@ -454,6 +473,19 @@ mvn spring-boot:run
   document.getElementById("themeToggle").onclick = () => {
     document.body.classList.toggle("light");
   };
+
+  // mobile nav toggle
+  const mobileBtn = document.getElementById("mobileNavBtn");
+  const mobileMenu = document.getElementById("mobileMenu");
+
+  mobileBtn.addEventListener("click", () => {
+    mobileMenu.classList.toggle("open");
+  });
+
+  // close menu when a link is clicked
+  document.querySelectorAll("#mobileMenu a").forEach(a => {
+    a.addEventListener("click", () => mobileMenu.classList.remove("open"));
+  });
 
   // simple fade-in on scroll
   const sections = document.querySelectorAll("section");
