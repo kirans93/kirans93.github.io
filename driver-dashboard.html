@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,313 +9,409 @@
   <meta name="description" content="Backend system using Spring Boot, JWT, MySQL, JPA, CI/CD & JMeter." />
   <meta name="theme-color" content="#0ea5e9" />
 
-<style>
-html { scroll-behavior: smooth; }
+  <style>
+    /* ========= GLOBAL ========= */
+    html { scroll-behavior:smooth; }
+    * { margin:0; padding:0; box-sizing:border-box; }
 
-html { scroll-behavior: smooth; }
+    :root{
+      --bg:#050816;
+      --card:#0f172a;
+      --accent:#38bdf8;
+    }
 
-/* GLOBAL */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  font-family: system-ui, sans-serif;
-  background:#050816;
-  color:#e5e7eb;
-  padding:24px;
-  display:flex;
-  justify-content:center;
-}
-.content { max-width:900px; width:100%; }
+    body{
+      font-family:system-ui,sans-serif;
+      background:var(--bg);
+      color:#e5e7eb;
+      padding:26px;
+      display:flex;
+      justify-content:center;
+    }
 
-/* HEADER */
-header {
-  margin-bottom:30px;
-  padding:24px;
-  background: radial-gradient(circle at top left, #1e293b, #020617 60%);
-  border-radius:18px;
-  border:1px solid rgba(148,163,184,0.25);
-}
-header h1{ font-size:1.8rem; margin-bottom:8px; }
-header p{ font-size:0.95rem; color:#94a3b8; }
+    .content{ max-width:900px; width:100%; }
 
-/* SECTIONS */
-section {
-  padding:20px;
-  margin-bottom:20px;
-  border-radius:16px;
-  background:rgba(15,23,42,0.88);
-  border:1px solid rgba(55,65,81,0.7);
-}
-section h2{
-  margin-bottom:10px;
-  color:#38bdf8;
-  font-size:1.2rem;
-  font-weight:600;
-}
+    /* ========= HEADER ========= */
+    header{
+      background:radial-gradient(circle at top left,#1e293b,#020617);
+      padding:26px;
+      border-radius:18px;
+      margin-bottom:30px;
+      border:1px solid rgba(255,255,255,0.12);
+    }
+    header h1{ font-size:2rem; margin-bottom:6px; }
+    header p{ font-size:0.95rem; color:#94a3b8; }
 
-/* LIST */
-ul{ list-style:none; margin-top:6px; }
-ul li{
-  position:relative;
-  padding-left:18px;
-  margin-bottom:6px;
-  font-size:0.95rem;
-}
-ul li::before{
-  content:"•";
-  position:absolute;
-  left:4px;
-  color:#38bdf8;
-}
+    /* ========= SECTIONS ========= */
+    section{
+      background:var(--card);
+      border-radius:16px;
+      padding:20px;
+      border:1px solid rgba(255,255,255,0.1);
+      margin-bottom:20px;
+      transition:all .45s ease;
+    }
+    section h2{
+      color:var(--accent);
+      margin-bottom:12px;
+      font-size:1.2rem;
+      font-weight:600;
+    }
 
-/* IMAGE */
-.arch-wrapper{
-  padding:16px;
-  margin:20px 0;
-  border-radius:18px;
-  border:1px solid rgba(255,255,255,0.1);
-  background:rgba(255,255,255,0.04);
-  text-align:center;
-}
-.arch-image{
-  width:100%;
-  max-width:760px;
-  border-radius:12px;
-  cursor:zoom-in;
-}
-.arch-caption{margin-top:8px; font-size:0.85rem; color:#94a3b8; }
+    /* ========= LIST ========= */
+    ul{ list-style:none; margin-top:6px; }
+    ul li{
+      padding-left:18px;
+      margin-bottom:6px;
+      position:relative;
+      font-size:0.95rem;
+    }
+    ul li::before{
+      content:"•";
+      position:absolute;
+      left:4px;
+      color:var(--accent);
+    }
 
-/* DOWNLOAD SECTIONS */
-.download-box{
-  padding:16px;
-  background:rgba(255,255,255,0.05);
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,0.07);
-}
-.btn-download{
-  display:inline-block;
-  margin-top:8px;
-  padding:10px 14px;
-  border-radius:10px;
-  transition:.3s;
-  color:#38bdf8;
-  border:1px solid #38bdf8;
-  text-decoration:none;
-}
-.btn-download:hover{
-  background:#38bdf8;
-  color:black;
-}
+    /* ========= IMAGES ========= */
+    .arch-wrapper{
+      border:1px solid rgba(255,255,255,0.12);
+      padding:16px;
+      border-radius:16px;
+      text-align:center;
+      background:rgba(15,23,42,0.9);
+    }
+    .arch-image{
+      width:100%; max-width:760px;
+      border-radius:12px;
+      transition:.25s;
+      cursor:zoom-in;
+    }
+    .arch-image:hover{ transform:scale(1.015); }
+    .arch-caption{
+      margin-top:8px;
+      font-size:0.85rem;
+      color:#94a3b8;
+    }
 
-/* CODE BLOCK (Universal formatting + wrap fix) */
-pre {
-  white-space: pre-wrap;
-  word-break: break-word;
-  background:#0d101e;
-  padding:14px;
-  border-radius:10px;
-  margin-top:10px;
-  font-size:0.92rem;
-  line-height:1.4;
-  border:1px solid rgba(255,255,255,0.07);
-  overflow-x:hidden;
-}
+    /* ========= CODE BLOCK ========= */
+    pre{
+      white-space:pre-wrap;
+      word-break:break-word;
+      background:#0d101e;
+      padding:14px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,.07);
+      font-size:0.9rem;
+      line-height:1.4;
+      margin-top:8px;
+    }
 
-/* SIDEBAR NAV */
-.sidebar{
+    /* ========= DOWNLOAD / RESOURCE BOX ========= */
+    .download-box{
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius:16px;
+      padding:18px;
+    }
+    .btn-download{
+      display:inline-block;
+      margin-top:8px;
+      margin-right:8px;
+      padding:10px 14px;
+      border-radius:10px;
+      border:1px solid var(--accent);
+      color:var(--accent);
+      background:#0b1120;
+      text-decoration:none;
+      font-size:0.9rem;
+      transition:.25s;
+    }
+    .btn-download:hover{
+      background:var(--accent);
+      color:#000;
+      transform:translateY(-1px);
+    }
+
+    /* ========= BUTTONS ========= */
+    button, .footer-btn {
+      padding:10px 15px;
+      background:#1e293b;
+      border:1px solid var(--accent);
+      border-radius:10px;
+      cursor:pointer;
+      color:var(--accent);
+      text-decoration:none;
+      transition:.25s;
+      font-size:0.9rem;
+    }
+    button:hover, .footer-btn:hover{
+      background:var(--accent);
+      color:#000;
+    }
+
+    /* ========= SIDEBAR NAV ========= */
+    .sidebar{
+      position:fixed;
+      left:10px;
+      top:100px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      z-index:20;
+    }
+    .sidebar a{
+      color:var(--accent);
+      text-decoration:none;
+      opacity:.75;
+      font-size:0.9rem;
+    }
+    .sidebar a:hover{ opacity:1; }
+
+/* ========= MOBILE NAV (FIXED + ALWAYS VISIBLE ON MOBILE) ========= */
+.mobile-nav{
+  display:none;
   position:fixed;
-  left:10px;
-  top:100px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  z-index:999;
+  bottom:18px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#0b1120;
+  border:1px solid var(--accent);
+  padding:12px 18px;
+  border-radius:14px;
+  gap:20px;
+  z-index:9999;
+  box-shadow:0px 0px 12px rgba(0,0,0,0.45);
 }
-.sidebar a{
-  color:#38bdf8;
-  opacity:0.75;
-  font-size:0.9rem;
+
+.mobile-nav a{
+  color:var(--accent);
+  font-size:0.85rem;
   text-decoration:none;
-  transition:.2s;
-}
-.sidebar a:hover{ opacity:1; }
-
-/* FOOTER */
-.footer-actions {
-  margin-top: 35px;
-  padding-top: 18px;
-  border-top: 1px solid rgba(55,65,81,.6);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
+  white-space:nowrap;
+  font-weight:500;
+  opacity:.85;
 }
 
-.footer-btn {
-  padding:10px 18px;
-  border-radius:10px;
-  border:1px solid #38bdf8;
-  background:#1e293b;
-  text-decoration:none;
-  color:#38bdf8;
-  transition:.25s;
-}
-.footer-btn:hover{
-  background:#38bdf8;
-  color:#000;
+.mobile-nav a:hover{ opacity:1; }
+
+/* Show only on mobile & hide sidebar */
+@media(max-width:850px){
+  .sidebar{ display:none; }
+  .mobile-nav{ display:flex; }
 }
 
-/* ---------- LIGHT MODE FIX (FINAL POLISHED) ---------- */
-
-.light body { background:#ffffff; color:#0f172a; }
-.light header, .light section {
-  background:#ffffff !important;
-  border:1px solid #d0d7df !important;
+#themeToggle{
+  position:fixed;
+  right:18px;
+  bottom:80px; /* moved up to avoid overlapping nav */
+  z-index:9999;
 }
 
-.light h1 { color:#0f172a; }
-.light p, 
-.light li, 
-.light td, 
-.light th { color:#1e293b !important; }
 
-.light h2 { color:#0284c7 !important; }
-.light ul li::before { color:#0284c7; }
 
-.light .arch-caption { color:#475569; }
+    /* ========= FOOTER ========= */
+    .footer-actions{
+      margin-top:30px;
+      padding-top:18px;
+      border-top:1px solid rgba(255,255,255,.15);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:10px;
+      font-size:0.9rem;
+    }
+    .footer-copy{ opacity:0.7; }
 
-.light .sidebar a { color:#0284c7; }
+    /* ========= LIGHT MODE ========= */
+    .light body{ background:#f8fafc; color:#0f172a; }
+    .light section,
+    .light header{
+      background:#ffffff !important;
+      border:1px solid #d0d7df !important;
+    }
+    .light h1{ color:#0f172a; }
+    .light h2{ color:#0284c7 !important; }
+    .light p,
+    .light li{
+      color:#1e293b !important;
+    }
+    .light ul li::before{ color:#0284c7; }
+    .light .arch-wrapper{ background:#ffffff; }
+    .light .arch-caption{ color:#475569; }
+    .light pre{
+      background:#eef2f7 !important;
+      border:1px solid #cbd5e1 !important;
+      color:#0f172a !important;
+    }
+    .light .sidebar a{ color:#0284c7; }
+    .light .btn-download,
+    .light .footer-btn{
+      background:#ffffff;
+      border-color:#0284c7;
+      color:#0284c7;
+    }
+    .light .btn-download:hover,
+    .light .footer-btn:hover{
+      background:#0284c7;
+      color:#ffffff;
+    }
 
-/* Buttons light mode */
-.light .btn-download,
-.light .footer-btn {
-  background:white;
-  border-color:#0284c7;
-  color:#0284c7;
-}
-.light .btn-download:hover,
-.light .footer-btn:hover{
-  background:#0284c7;
-  color:white;
-}
+    /* ========= RESPONSIVE ========= */
+    @media(max-width:850px){
+      .sidebar{ display:none; }
+      .mobile-nav{ display:flex; }
+    }
+    @media(max-width:600px){
+      body{ padding:18px; }
+      header{ padding:20px; }
+      section{ padding:16px; }
+      header h1{ font-size:1.6rem; }
+      pre{ font-size:0.86rem; padding:12px; }
+    }
 
-/* Light Mode Code Block */
-.light pre {
-  background:#eef2f7 !important;
-  border:1px solid #cbd5e1 !important;
-  color:#0f172a !important;
-}
-
-/* Mobile Fixes */
-@media(max-width:850px){ .sidebar{display:none;} }
-
-@media(max-width:600px){
-  pre { font-size:0.86rem; padding:12px; }
-}
-</Style>
+    /* ========= PRINT ========= */
+    @media print{
+      #themeToggle, .sidebar, .mobile-nav { display:none !important; }
+      body{ background:white; color:black; padding:0; }
+      section, header{
+        background:white !important;
+        border:1px solid #cbd5e1 !important;
+        page-break-inside:avoid;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<button id="themeToggle" style="
-position:fixed; right:20px; bottom:20px;
-background:#1e293b; border:1px solid #38bdf8;
-padding:10px 14px; border-radius:10px; cursor:pointer; color:#38bdf8;">
-🌗 Theme
+<button id="themeToggle" style="position:fixed;right:20px;bottom:20px;z-index:40;">
+  🌗 Theme
 </button>
 
-<div class="content">
-
-<header>
-  <h1>School Transport Backend System</h1>
-  <p>Spring Boot • JWT • MySQL • Hibernate • JMeter • CI/CD</p>
-</header>
-
-<nav class="sidebar">
+<nav class="mobile-nav">
   <a href="#overview">Overview</a>
-  <a href="#responsibilities">Responsibilities</a>
   <a href="#features">Features</a>
-  <a href="#architecture">Architecture</a>
-  <a href="#schema">DB Schema</a>
-  <a href="#api">API Docs</a>
-  <a href="#performance">Performance</a>
+  <a href="#schema">Schema</a>
+  <a href="#api">API</a>
   <a href="#result">Result</a>
 </nav>
 
-<section id="overview">
-  <h2>📌 Overview</h2>
-  <p>Backend system enabling secure transport workflow including drivers, buses, trips, routes, fuel logs, alerts & dashboards.</p>
-</section>
+<div class="content">
 
-<section id="responsibilities">
-  <h2>🎯 Responsibilities</h2>
-  <ul>
-    <li>Authentication and Authorization using JWT</li>
-    <li>REST architecture and layered backend design</li>
-    <li>JPA modeling and complex relationships</li>
-    <li>CI/CD pipeline automation</li>
-  </ul>
-</section>
+  <header>
+    <h1>School Transport Backend System</h1>
+    <p>Spring Boot • JWT • MySQL • Hibernate • JMeter • CI/CD</p>
+  </header>
 
-<section id="features">
-  <h2>🚀 Features</h2>
-  <ul>
-    <li>Route and stop management</li>
-    <li>Emergency alerts + announcements</li>
-    <li>Fuel & maintenance tracking</li>
-    <li>Trip lifecycle with real-time states</li>
-  </ul>
-</section>
+  <nav class="sidebar">
+    <a href="#overview">Overview</a>
+    <a href="#responsibilities">Responsibilities</a>
+    <a href="#features">Features</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#schema">DB Schema</a>
+    <a href="#api">API Docs</a>
+    <a href="#performance">Performance</a>
+    <a href="#setup">Run Locally</a>
+    <a href="#result">Result</a>
+  </nav>
 
-<section id="architecture">
-<div class="arch-wrapper">
-  <img src="assets/system_architecture.png" class="arch-image">
-  <p class="arch-caption">Client → Spring Boot API → Database</p>
-</div>
-</section>
+  <section id="overview">
+    <h2>📌 Overview</h2>
+    <p>
+      Backend system enabling secure school transport workflows including drivers, buses, trips, routes,
+      fuel logs, alerts and dashboards. Built as a production-style project with layered architecture,
+      JWT-based authentication, and CI/CD automation.
+    </p>
+  </section>
 
-<section id="schema">
-  <h2>🗂 Database Schema</h2>
-  <img src="assets/db/school-transport-db-schema.png" style="width:100%;border-radius:12px;">
-</section>
+  <section id="responsibilities">
+    <h2>🎯 Responsibilities</h2>
+    <ul>
+      <li>Authentication and authorization using JWT and Spring Security.</li>
+      <li>REST architecture with layered backend design (Controller → Service → Repository).</li>
+      <li>JPA modeling with relationships and entity mapping.</li>
+      <li>CI/CD pipeline automation for build and deployment.</li>
+    </ul>
+  </section>
 
-<section id="api">
-  <h2>📡 API Snapshot</h2>
+  <section id="features">
+    <h2>🚀 Features</h2>
+    <ul>
+      <li>Route and stop management for buses and trips.</li>
+      <li>Emergency alerts and announcements module.</li>
+      <li>Fuel and maintenance tracking for vehicles.</li>
+      <li>Trip lifecycle with real-time states and driver dashboard.</li>
+    </ul>
+  </section>
 
-<pre>
-POST /api/auth/login → token
-GET /api/dashboard/full → DriverDashboardDto
-POST /api/trips/start → status: STARTED
-POST /driver/fuel/logs → fuel entry
-GET /api/announcements → list
-</pre>
-</section>
+  <section id="architecture">
+    <h2>🏛 System Architecture</h2>
+    <div class="arch-wrapper">
+      <img src="assets/system_architecture.png" class="arch-image" alt="System Architecture Diagram">
+      <p class="arch-caption">Client → Spring Boot API → Service Layer → Repository Layer → MySQL Database</p>
+    </div>
+  </section>
 
+  <section id="schema">
+    <h2>🗂 Database Schema</h2>
+    <p>Relational, normalized schema supporting trips, vehicles, drivers, students, alerts, fuel logs, attendance and analytics.</p>
+    <img src="assets/db/school-transport-db-schema.png"
+         alt="School Transport Database Schema"
+         style="width:100%;border-radius:12px;margin-top:10px;">
+  </section>
 
-<section class="download-box">
-  <h2>📦 Resources</h2>
-  <a class="btn-download" href="https://documenter.getpostman.com/view/47594456/2sB3HrkccM">Postman</a>
-  <a class="btn-download" href="assets/db/school-transport-db-schema.png">DB Schema</a>
-  <a class="btn-download" href="assets/system_architecture.png">Architecture Diagram</a>
-</section>
+  <section id="api">
+    <h2>📡 API Snapshot</h2>
+    <pre>
+POST /api/auth/login
+→ JWT token
 
-<section id="performance">
-  <h2>⚙ Performance</h2>
-  <ul>
-    <li>JMeter load testing</li>
-    <li>SQL optimization + indexing</li>
-  </ul>
-</section>
+GET  /api/dashboard/full?driverId={id}&vehicleId={id}
+→ DriverDashboardDto
 
-<section id="setup">
-  <h2>⚙️ Run Locally</h2>
+POST /api/trips/start
+→ { tripId, status: "STARTED" }
 
-<pre>
+POST /driver/fuel/logs
+→ { id, liters, cost, createdAt }
+
+GET  /api/announcements
+→ list of announcements
+    </pre>
+  </section>
+
+  <section class="download-box">
+    <h2>📦 Resources</h2>
+    <a class="btn-download" href="https://documenter.getpostman.com/view/47594456/2sB3HrkccM" target="_blank">
+      Postman Collection
+    </a>
+    <a class="btn-download" href="assets/db/school-transport-db-schema.png" download>
+      DB Schema
+    </a>
+    <a class="btn-download" href="assets/system_architecture.png" download>
+      Architecture Diagram
+    </a>
+  </section>
+
+  <section id="performance">
+    <h2>⚙ Performance</h2>
+    <ul>
+      <li>JMeter load / stress testing on key APIs.</li>
+      <li>SQL optimization and indexing for critical queries.</li>
+    </ul>
+  </section>
+
+  <section id="setup">
+    <h2>⚙️ Run Locally</h2>
+    <pre>
 📁 Clone the repository
 git clone https://github.com/kirans93/driver-dashboard.git
 cd driver-dashboard
 
 🛠 Configure Database
-Update DB credentials in: 
+Update DB credentials in:
 src/main/resources/application.properties
 
 🧪 Apply Schema
@@ -324,38 +419,54 @@ Import schema.sql or run migrations (if enabled)
 
 🚀 Start Application
 mvn spring-boot:run
-</pre>
+    </pre>
 
-<a class="btn-download" href="https://github.com/kirans93/driver-dashboard/archive/refs/heads/main.zip">
-⬇ Download Source (.zip)
-</a>
+    <a class="btn-download" href="https://github.com/kirans93/driver-dashboard/archive/refs/heads/main.zip">
+      ⬇ Download Source (.zip)
+    </a>
+  </section>
 
-</section>
+  <section id="result">
+    <h2>📈 Result</h2>
+    <p>
+      Scalable, secure, and production-style backend system with automated build pipeline,
+      optimized response time, and clear separation of concerns for future features like GPS tracking
+      and notifications.
+    </p>
+  </section>
 
-
-<section id="result">
-  <h2>📈 Result</h2>
-  <p>Scalable, secure, and production-ready system with optimized response time.</p>
-</section>
-
-<footer class="footer-actions">
-  <a href="index.html" class="footer-btn">← Back</a>
-  <span class="footer-copy">© 2025 Kiran S.</span>
-
+  <footer class="footer-actions">
+    <a href="index.html" class="footer-btn">← Back</a>
+    <span class="footer-copy">© 2025 Kiran S.</span>
     <a href="https://github.com/kirans93" target="_blank" class="footer-btn">GitHub Repo 🔗</a>
-
-</footer>
-
+  </footer>
 
 </div>
 
-
-
 <script>
-document.getElementById("themeToggle").onclick=()=>{document.body.classList.toggle("light")};
+  // theme toggle
+  document.getElementById("themeToggle").onclick = () => {
+    document.body.classList.toggle("light");
+  };
+
+  // simple fade-in on scroll
+  const sections = document.querySelectorAll("section");
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = "1";
+        entry.target.style.transform = "translateY(0)";
+      }
+    });
+  }, { threshold: 0.12 });
+
+  sections.forEach(sec => {
+    sec.style.opacity = "0";
+    sec.style.transform = "translateY(18px)";
+    sec.style.transition = "all .45s ease";
+    observer.observe(sec);
+  });
 </script>
 
 </body>
-
-
 </html>
