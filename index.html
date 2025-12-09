@@ -1177,15 +1177,13 @@
                       <span class="hero-profile-tag">Spring Ecosystem</span>
                       <span class="hero-profile-tag">REST APIs</span>
 
-                    <a href="assets/resume/kiran_resume_software_development.pdf"
-   download
+                    <a href="assets/resume/kiran_resume_software_development.pdf" 
+
+   download 
    class="btn resume-btn"
-   style="margin-top: 0.7rem; width:100%; text-align:center;"
-   onclick="gtag('event', 'resume_download');">
+   style="margin-top: 0.7rem; width:100%; text-align:center;">
 📄 Download Resume
 </a>
-
-
 
                     </div>
                   </div>
@@ -1685,6 +1683,22 @@
   <h3>Total visitors</h3>
 <img src="https://hits.sh/kirans93.github.io.svg?view=1&reset=1&style=flat&label=visitors" />
 </body>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const resumeButton = document.querySelector('.resume-btn');
+
+  if (resumeButton) {
+    resumeButton.addEventListener('click', function() {
+      gtag('event', 'resume_download', {
+        value: 1,
+        type: 'download'
+      });
+      console.log("Resume download event fired!");
+    });
+  }
+});
+</script>
 
 </body>
 </html>
